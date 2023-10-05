@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>TODO App</title>
+</head>
+<script>
+
+     function parseResponse(data){
+          console.log(data);
+     }
+
+     function callback (resp){
+          resp.json().then(parseResponse)
+     }
+     function onPress(){
+          fetch("http://localhost:3000/todos" , {
+               "method": "POST"
+          }).then(callback)   // add pody and conternt-type for post
+
+          
+          
+     }
+
+</script>
+<body>
+
+     <h3>This is TODO App</h3>
+
+     Title<input type="text" id="title"></input>
+     <br><br>
+     Description <input type="text" id="Description"/>
+     <br><br>
+     <button onclick="onPress()"> Create Todo</button>
+
+     
+</body>
+</html>
