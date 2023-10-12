@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(cors())
 
 
-app.get('/todos' , (req ,res) =>{
+app.get('/todos' , (req,res) =>{
 
      function callback(data){
           console.log(data);
@@ -26,7 +26,7 @@ app.post('/todos' , (req ,res) =>{
           "title" : req.body.title,
           "description" : req.body.description
      }
-     ctr++;
+     ctr = ctr+1;
 
      const todos = JSON.parse(fs.readFileSync('data.json' , 'utf-8' ));
 

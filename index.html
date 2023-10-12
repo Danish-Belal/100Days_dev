@@ -7,6 +7,49 @@
 </head>
 <script>
 
+     function toDoCallBack(data){
+          console.log(data);
+          var parentElement = document.getElementById("mainArea");
+
+          function deleteToDo(id){
+               console.log( id);
+          }
+          for(let i =0 ; i<data.length ; i++){
+               let chileElement = document.createElement("div")
+
+               let grandChild1 = document.createElement("span") 
+               grandChild1.innerHTML = data[i].title
+
+               
+               let grandChild2 = document.createElement("span") 
+               grandChild2.innerHTML = data[i].description
+
+               let grandChild3 = document.createElement("button")
+               grandChild3.innerHTML = "Delete";
+
+               grandChild3.setAttribute("onClick" , "deleteToDo(" +data[i].id+ ")");
+
+               chileElement.appendChild(grandChild1)
+               chileElement.appendChild(grandChild2)
+               chileElement.appendChild(grandChild3)
+
+               parentElement.append(chileElement)
+          }
+     }
+
+     function getDataCall(resp){
+          console.log(resp);
+          resp.json().then(toDoCallBack)
+     }
+
+     function getData(){
+               fetch("http://localhost:3000/todos" ,{
+               method :"GET",
+          }).then(getDataCall)
+     }
+
+     getData()
+
      function parseResponse(data){
           console.log(data);
      }
@@ -15,12 +58,20 @@
           resp.json().then(parseResponse)
      }
      function onPress(){
+          title = document.getElementById("title").value;
+          description = document.getElementById("description").value;
+          console.log(title)
+          console.log(description)
           fetch("http://localhost:3000/todos" , {
-               "method": "POST"
-          }).then(callback)   // add pody and conternt-type for post
-
-          
-          
+               method: "POST",
+               body: JSON.stringify({
+                    "title" : title,
+                    "description" : description
+               }),
+               headers : {
+                    "Content-type" : "application/json"
+               }
+          }).then(callback)  
      }
 
 </script>
@@ -30,9 +81,13 @@
 
      Title<input type="text" id="title"></input>
      <br><br>
-     Description <input type="text" id="Description"/>
+     Description <input type="text" id="description"/>
      <br><br>
      <button onclick="onPress()"> Create Todo</button>
+
+     <div id="mainArea">
+
+     </div>
 
      
 </body>
