@@ -1,30 +1,60 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import React from 'react';
 import './App.css'
 
-function App() {
-  const[ todo , setTodos] = useState({
-    id : 1,
-    title : "Go to gym",
-    description : "Gym will pump your body"
-  })
+function useTodo(){
+  const[ todos , setTodos] = useState([]);
 
-  setTimeout(() => {
-    setTodos({
-      id : 2,
-      title : "Eat food",
-      description : "Eat Healthy foods"
-    })   
-  }, 4000);
+  React.useEffect( () => {
+    fetch("http://localhost:3000/todos", {
+      method: 'GET'
+    }).then((respons) => {
+      respons.json().then((data) => {
+        console.log(data);
+        setTodos(data);
+      })
+    });
+
+    setInterval(()=>{
+      fetch("http://localhost:3000/todos", {
+      method: 'GET'
+    }).then((respons) => {
+      respons.json().then((data) => {
+        console.log(data);
+        setTodos(data);
+      })
+    });
+
+    },1000)
+  }, [])
+  return todos
+}
+function App() {
+  const todos = useTodo();
+
   return (
-    <>
-      <h3>Hii there </h3>
-      {todo.id}
-      {todo.title}
-      {todo.description}
+    <div>
       
-    </>
+       {/* {JSON.stringify(todos)} */}
+       {todos.map((todo) =>{
+          return (
+          <Todo  id = {todo.id} title = {todo.title} description = {todo.description}/>
+          )
+        })}  
+    </div>
   )
+  
+}
+
+function Todo(prpos){
+  return <div>
+    
+    {prpos.title} {" "}
+    {prpos.description} 
+    <button >Delete</button>
+
+  </div>
 }
 
 export default App
