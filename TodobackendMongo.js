@@ -2,12 +2,13 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const app = express();
+const cors = require('cors');
 
 require('dotenv').config();
 
 app.use(express.json());
 
-
+app.use(cors());
 const secret = process.env.JWT_SECRET;
 
 // Mongoose Schema
