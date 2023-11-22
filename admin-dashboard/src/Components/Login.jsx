@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { Card, Typography } from "@mui/material";
+import ShowCource from './ShowCourse'
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -53,6 +54,7 @@ function Login() {
             onClick={() => {
               function callback2(data) {
                 localStorage.setItem("token", data.token);
+                console.log(data);
               }
               function callback1(res) {
                 res.json().then(callback2);
