@@ -26,13 +26,13 @@ function ShowCourse() {
   return (
     <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
       {cources.courses.map((course) => (
-        <Course key={course._id} course={course} />
+        <Cources key={course._id} course={course} />
       ))}
     </div>
   );
 }
 
-export function Course(props) {
+export function Cources(props) {
   return (
     <Card style={{ margin: 10, width: 300, minHeight: 200 }}>
       <Typography textAlign={"center"} variant="h5">

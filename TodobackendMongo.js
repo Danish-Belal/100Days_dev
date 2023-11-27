@@ -135,6 +135,26 @@ app.post('/admin/courses' , authenticateJwt , async (req,res) => {
      }
 });
 
+app.get('/admin/course/:courseId' , authenticateJwt , async (req,res)=>{
+     try{
+          const course = await Course.findById(req.params.courseId)
+          if(course){
+               return  res.status(200).json({
+                    massage : "Course FOund succesfully",
+                    course : course
+               })
+          }else{
+               return res.status(401).json({
+                    massage : "couse is not availble"
+               })
+          }
+     }catch(error){
+          return res.status(500).json({
+               massage : "Internal server fail"
+          });
+     }
+})
+
 app.put('/admin/course/:courseId' , authenticateJwt , async (req,res)=>{
      try{
           const course = await Course.findByIdAndUpdate(req.params.courseId , req.body , {new : true});
