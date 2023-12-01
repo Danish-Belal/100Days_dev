@@ -6,6 +6,13 @@ import CreateCourse from './Components/CreateCourse'
 import ShowCourse from './Components/ShowCourse'
 import Course from './Components/Course'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
 
 function App() {
   
@@ -14,6 +21,7 @@ function App() {
     < div style={{width: "100wh",
     height: "100vh",
     backgroundColor: "#eeeeee"}}>
+    <RecoilRoot >
     <Router >
       <Home />
       <Routes>
@@ -24,7 +32,7 @@ function App() {
         <Route path={'/course/:courseId'} element = {<Course />} ></Route>
       </Routes>
     </Router>
-    
+    </RecoilRoot>
     </div>
   )
 }
