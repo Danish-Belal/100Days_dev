@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Button, Card, TextField, Typography } from "@mui/material";
 import { atom, useRecoilState, useRecoilValue } from "recoil";
 import { useSetRecoilState } from "recoil";
+import axios from "axios";
 
 function Course() {
   const { courseId } = useParams();
@@ -10,20 +11,26 @@ function Course() {
   const setCourse = useSetRecoilState(courseState);
 
   useEffect(() => {
-    function callback2(data) {
-      setCourse(data.course);
-      console.log(data.course);
-    }
+    console.log("HELLLLLO");
+    const fetchData = async () =>{
+      try{
+        const resData = await axios.get(`http://localhost:3001/admin/course/654480dbcdf65fe804231673`, {
+          headers: {
+            authorization:  `Bearer ${localStorage.getItem('token')}`
+          },
+        });
 
-    function callback1(res) {
-      return res.json().then(callback2);
+        console.log("hello");
+        // console.log(resData.data , "Hell0..............");
+        setCourse(resData.data.course);
+
+        
+      }catch(error){
+        console.log("Catched error");
+        console.log(error);
+      }
     }
-    fetch(`http://localhost:3001/admin/course/${courseId}`, {
-      method: "GET",
-      headers: {
-        authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    }).then(callback1);
+    fetchData ()
   }, []);
   return (
     <div>
