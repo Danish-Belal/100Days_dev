@@ -1,12 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Todo = exports.User = void 0;
-var mongoose_1 = require("mongoose");
-var userSchema = new mongoose_1.default.Schema({
+const mongoose_1 = __importDefault(require("mongoose"));
+const userSchema = new mongoose_1.default.Schema({
     username: String,
     password: String,
 });
-var todoSchema = new mongoose_1.default.Schema({
+const todoSchema = new mongoose_1.default.Schema({
     title: String,
     description: String,
     done: Boolean,
