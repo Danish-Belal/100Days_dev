@@ -17,10 +17,10 @@ const index_1 = require("../middelware/index");
 const db_1 = require("../db");
 const router = express_1.default.Router();
 router.post('/todos', index_1.authenticateJWT, (req, res) => {
-    const { title, description } = req.body;
+    const input = req.body;
     const done = false;
     const userId = req.headers["userId"];
-    const newTodo = new db_1.Todo({ title, description, done, userId });
+    const newTodo = new db_1.Todo({ title: input.title, description: input.description, done, userId });
     newTodo.save()
         .then((savedTodod) => {
         res.status(201).json(savedTodod);

@@ -32,8 +32,8 @@ router.get('/todos' , authenticateJWT , async(req, res)=>{
 
      try{
           const todos =await Todo.find({userId})
-          return res.status(200).json({
-               todo : todos
+          res.status(200).json({
+               todos
           });
           
 
