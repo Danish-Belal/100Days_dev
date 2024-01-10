@@ -1,9 +1,12 @@
 
-type input = (number | string)[];
-function getFirstNumber(arr: input) : (number | string){
+
+function getFirstEle<T>(arr : T[]) : T{
      return arr[0];
 }
-let array = [1,2,3,4,5];
-let array2 = ["He", "shae", "sesa"];
-let ans = getFirstNumber(array2)
-console.log(ans);
+let ans1 = getFirstEle<number>([1,2,3,4]);
+console.log(ans1);
+
+
+let ans2 = getFirstEle<string>(["Hiiii" , "hello" , "ok" , "buy"]);
+console.log(ans2);
+

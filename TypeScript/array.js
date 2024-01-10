@@ -1,7 +1,7 @@
-function getFirstNumber(arr) {
+function getFirstEle(arr) {
     return arr[0];
 }
-var array = [1, 2, 3, 4, 5];
-var array2 = ["He", "shae", "sesa"];
-var ans = getFirstNumber(array2);
-console.log(ans);
+var ans1 = getFirstEle([1, 2, 3, 4]);
+console.log(ans1);
+var ans2 = getFirstEle(["Hiiii", "hello", "ok", "buy"]);
+console.log(ans2);
