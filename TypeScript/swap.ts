@@ -8,3 +8,4 @@ console.log(ans);
 
 
 // Partial is used when we need to modifed, make all attribute ooptional , like for todo update
+// zos is an input validation library
