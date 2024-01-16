@@ -17,8 +17,22 @@ const express_1 = __importDefault(require("express"));
 const middelware_1 = require("../middelware/");
 const db_1 = require("../db");
 const route = express_1.default.Router();
+const zod_1 = require("zod");
+const signupInput = zod_1.z.object({
+    username: zod_1.z.string().min(1).max(15),
+    password: zod_1.z.string().min(1).max(15),
+});
 route.post('/signup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { username, password } = req.body;
+    const parseInput = signupInput.safeParse(req.body);
+    if (!parseInput.success) {
+        res.status(411).json({
+            error: parseInput.error,
+        });
+        return;
+    }
+    const username = parseInput.data.username;
+    const password = parseInput.data.password;
+    // const {username, password} = req.body
     const user = yield db_1.User.findOne({ username });
     if (user) {
         return res.status(402).json({

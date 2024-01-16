@@ -21,7 +21,7 @@ const TodoList = () => {
             });
             // Todo: Create a type for the response that you get back from the server
             const data: Todo[] = await response.json();
-            const alltodo = data.todo;            
+            const alltodo = data.todos;            
             setTodos(alltodo);
             
         };
