@@ -4,12 +4,8 @@ import express from 'express'
 import {authenticateJWT , SECRET} from '../middelware/';
 import { User }  from "../db";
 const route = express.Router();
+import {signupInput} from '@dev_danish___/common'
 import {z} from 'zod'
-
-const signupInput = z.object({
-     username : z.string().min(1).max(15),
-     password : z.string().min(1).max(15),
-});
 
 
 route.post('/signup' , async(req,res) =>{

@@ -17,13 +17,9 @@ const express_1 = __importDefault(require("express"));
 const middelware_1 = require("../middelware/");
 const db_1 = require("../db");
 const route = express_1.default.Router();
-const zod_1 = require("zod");
-const signupInput = zod_1.z.object({
-    username: zod_1.z.string().min(1).max(15),
-    password: zod_1.z.string().min(1).max(15),
-});
+const common_1 = require("@dev_danish___/common");
 route.post('/signup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const parseInput = signupInput.safeParse(req.body);
+    const parseInput = common_1.signupInput.safeParse(req.body);
     if (!parseInput.success) {
         res.status(411).json({
             error: parseInput.error,

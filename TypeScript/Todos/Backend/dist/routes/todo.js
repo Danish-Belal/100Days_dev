@@ -35,8 +35,8 @@ router.get('/todos', index_1.authenticateJWT, (req, res) => __awaiter(void 0, vo
     const userId = req.headers["userId"];
     try {
         const todos = yield db_1.Todo.find({ userId });
-        return res.status(200).json({
-            todo: todos
+        res.status(200).json({
+            todos
         });
     }
     catch (err) {
