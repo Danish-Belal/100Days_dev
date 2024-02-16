@@ -4,9 +4,9 @@ import axios from "axios";
 
 export default function SigninPage(){
      return <div>
-          <Signup onClick={async (username,password)=>{
+          <Signup onClick={async (email,password)=>{
                const response = await axios.post("/api/signup", {
-                    username, 
+                    email, 
                     password
                 });
                 localStorage.setItem("token", response.data.token);
