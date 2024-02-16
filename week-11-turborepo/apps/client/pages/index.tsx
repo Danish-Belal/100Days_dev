@@ -11,7 +11,6 @@ export default function Home() {
   return (
     <>
     <Button  appName="client" className={styles.button}> Click Me </Button>
-    <Signup />
       <h1>Hello there</h1>
     </>
   );
