@@ -1,0 +1,15 @@
+import type { NextApiRequest , NextApiResponse } from "next";
+
+type Data = {
+     token : string
+}
+
+export default function handler(
+     req: NextApiRequest,
+     res: NextApiResponse<Data>
+){
+     const username = req.body.username;
+     const password = req.body.password
+
+     res.status(200).json({token: username})  // set token here
+}
