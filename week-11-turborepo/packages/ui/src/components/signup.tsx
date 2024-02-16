@@ -3,7 +3,7 @@ import { useState } from "react";
 
 // <Signup onClick={() => {}} />
 export function Signup(props: {
-    onClick: (username: string, password: string) => void
+    onClick: (email: string, password: string) => void
 }) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
