@@ -1,5 +1,7 @@
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import type { AppRouter } from '../server/index';
+import { User } from '../server/db';
+import { router } from '../server/trpc';
 //     👆 **type-only** import
 
 // Pass AppRouter as generic here. 👇 This lets the `trpc` object know
@@ -8,16 +10,42 @@ const trpc = createTRPCClient<AppRouter>({
   links: [
     httpBatchLink({
       url: 'http://localhost:3000',
+      async headers() {
+        return {
+          authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTEwNDg3NjQsImV4cCI6MTcxMTA1MjM2NH0.DI-7GNuagdc1vRTjjoy-FoGF5TzVRcxnDRFYdkHj1aU"
+        }
+      },
     }),
   ],
 });
 
 async function main(){
-     const response = await trpc.createTodo.mutate({
-          title: "goto gym",
-          description: "Hit the gym daily"
-     })
+     
+      // let user = await trpc.user.signup
+      // .mutate({
+      //   username:"Dansh",
+      //   password:"Danish"
+      // })
+      // console.log(user.token);
 
-     console.log(response);
+      // let userLogin = await trpc.user.login.mutate({username:"Danish"})
+      // if(userLogin.token){
+      //   console.log(userLogin.token);
+      //   console.log("token Printed");
+        
+        
+      // }else{
+      //   console.log("got nothing");
+        
+      //  }
+
+      // let userval = trpc.user.me.query()
+      // console.log((await userval).username);
+
+      const todo = await trpc.todo.createTodo.mutate({description: "adsa", title: "asd"});
+      console.log(todo);
+      
+
+      
 }
 main();
