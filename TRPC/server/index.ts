@@ -1,31 +1,71 @@
+require('dotenv').config();
+
 import { publicProcedure, router } from "./trpc";
-import z from 'zod'
+import z, { string } from 'zod'
 import { createHTTPServer } from '@trpc/server/adapters/standalone';
+import mongoose, { mongo } from 'mongoose';
+var jwt = require('jsonwebtoken');
+const  cors =  require('cors');
+import {User, Todo} from './db'
+import { userRouter} from "./routes/user";
+import { todoRouter} from "./routes/todo";
+
+const mongodbUrl = process.env.MONGODB_URL;
+const secret = process.env.SECRET;
+
+console.log(mongodbUrl);
+
+mongoose.connect('mongodb+srv://danishbelals:Capricorn%4012345@cluster1.5sekt6s.mongodb.net/')
+  .then(() => {
+    console.log("MongoDB Connected");
+  })
+  .catch((error) => {
+    console.error("MongoDB Connection Error:", error);
+  });
+
 
 const todoInputType = z.object({
      title: z.string(),
      description: z.string()
 })
 const appRouter = router({
-     createTodo: publicProcedure
-     .input(todoInputType)
-     .mutation(async (opts)=>{
-          const title = opts.input.title;
-          const description = opts.input.description;
-          console.log("hi from server");
-          
-          // do db stuff
+     user: userRouter,
+     todo: todoRouter,
+});
 
-          return {
-               id: 1,
-          }
-     })
-})
+export type AppRouter = typeof appRouter;
+
 const server = createHTTPServer({
      router: appRouter,
+     middleware: cors(),
+     createContext(otps){
+          let authHeader = otps.req.headers['authorization']
+          console.log("AuthHeader", authHeader);
+          
+          if(authHeader){
+               const token = authHeader.split(' ')[1]
+               console.log(token);
+               
+
+               return new Promise<{ db: { Todo: typeof Todo; User: typeof User }; userId?: string }>((resolve) => {
+                    jwt.verify(token, secret, (err: any, user: any) => {
+                        if (user) {
+                            resolve({ userId: user.userId as string, db: { Todo, User } });
+                        } else {
+                            resolve({ db: { Todo, User } });
+                        }
+                    });
+                });
+                
+               
+          }
+          return{
+               db:{Todo,User}
+          }
+     }
+
 });
 
 server.listen(3000);
 console.log("server staertd on 3000");
 
-export type AppRouter = typeof appRouter;
