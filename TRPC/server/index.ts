@@ -1,21 +1,22 @@
-require('dotenv').config();
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
 import { publicProcedure, router } from "./trpc";
 import z, { string } from 'zod'
 import { createHTTPServer } from '@trpc/server/adapters/standalone';
-import mongoose, { mongo } from 'mongoose';
+
 var jwt = require('jsonwebtoken');
 const  cors =  require('cors');
 import {User, Todo} from './db'
 import { userRouter} from "./routes/user";
 import { todoRouter} from "./routes/todo";
 
-const mongodbUrl = process.env.MONGODB_URL;
-const secret = process.env.SECRET;
+const mongodbUrl = process.env.MONGODB_URL || '';
+const secret = process.env.SECRET || '';
 
 console.log(mongodbUrl);
 
-mongoose.connect('mongodb+srv://danishbelals:Capricorn%4012345@cluster1.5sekt6s.mongodb.net/')
+mongoose.connect(mongodbUrl)
   .then(() => {
     console.log("MongoDB Connected");
   })
@@ -37,7 +38,7 @@ export type AppRouter = typeof appRouter;
 
 const server = createHTTPServer({
      router: appRouter,
-     middleware: cors(),
+     middleware: cors(), 
      createContext(otps){
           let authHeader = otps.req.headers['authorization']
           console.log("AuthHeader", authHeader);
