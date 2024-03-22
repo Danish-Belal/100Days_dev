@@ -12,7 +12,7 @@ const trpc = createTRPCClient<AppRouter>({
       url: 'http://localhost:3000',
       async headers() {
         return {
-          authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTEwNDg3NjQsImV4cCI6MTcxMTA1MjM2NH0.DI-7GNuagdc1vRTjjoy-FoGF5TzVRcxnDRFYdkHj1aU"
+          authorization: "Bearer 1"
         }
       },
     }),
