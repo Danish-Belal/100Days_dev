@@ -17,16 +17,35 @@ const trpc = (0, client_1.createTRPCClient)({
     links: [
         (0, client_1.httpBatchLink)({
             url: 'http://localhost:3000',
+            headers() {
+                return __awaiter(this, void 0, void 0, function* () {
+                    return {
+                        authorization: "Bearer 1"
+                    };
+                });
+            },
         }),
     ],
 });
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const response = yield trpc.createTodo.mutate({
-            title: "goto gym",
-            description: "Hit the gym daily"
-        });
-        console.log(response);
+        // let user = await trpc.user.signup
+        // .mutate({
+        //   username:"Dansh",
+        //   password:"Danish"
+        // })
+        // console.log(user.token);
+        // let userLogin = await trpc.user.login.mutate({username:"Danish"})
+        // if(userLogin.token){
+        //   console.log(userLogin.token);
+        //   console.log("token Printed");
+        // }else{
+        //   console.log("got nothing");
+        //  }
+        // let userval = trpc.user.me.query()
+        // console.log((await userval).username);
+        const todo = yield trpc.todo.createTodo.mutate({ description: "adsa", title: "asd" });
+        console.log(todo);
     });
 }
 main();
