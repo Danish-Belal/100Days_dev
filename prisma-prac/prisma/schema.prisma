@@ -8,7 +8,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
+datasource db {           //way to connect with db .
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
@@ -17,7 +17,7 @@ model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
-  posts Post[]
+  posts Post[]        // relation , defined that a user will have array of obj Post
 }
 
 model Post {
@@ -25,6 +25,6 @@ model Post {
   title     String
   content   String?
   published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
+  author    User    @relation(fields: [authorId], references: [id]) // relatoin with users. 
   authorId  Int
 }
